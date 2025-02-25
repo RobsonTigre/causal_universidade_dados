@@ -1,0 +1,94 @@
+##########################################################
+## Curso: Inferência Causal
+## Instrutor: Robson Tigre
+## Atividade: Aula 2
+## Criação: 18.10.24
+## Última modificação: 18.10.24
+##########################################################
+
+# # Limpa ambiente
+rm(list = ls())
+options(scipen=999)
+
+# Instala pacotes necessários e carrega pacotes necessários
+if(!require(wooldridge)) install.packages("wooldridge", dependencies=TRUE)
+if(!require(RCT)) install.packages("RCT", dependencies=TRUE)
+if(!require(dplyr)) install.packages("dplyr", dependencies=TRUE)
+if(!require(skimr)) install.packages("skimr", dependencies=TRUE)
+if(!require(writexl)) install.packages("writexl", dependencies=TRUE)
+
+
+#######################################
+# Exemplo de resultados experimentais vs. resultados observacionais Lalonde
+#######################################
+
+##########
+# Com dados observacionais
+##########
+
+data("jtrain3") # ver dicionário dos dados aqui https://cran.r-project.org/web/packages/wooldridge/wooldridge.pdf
+
+# Descrever os dados
+str(jtrain3)
+skim(jtrain3)
+
+# Regressões
+summary(lm(re78 ~ train, data = jtrain3))
+table(jtrain3$train, jtrain3$unem75)
+
+summary(lm(re78 ~ train + re75 + educ + age, data = jtrain3))
+summary(lm(re78 ~ train + re75 + re74 + educ + age + black + hisp, data = jtrain3))
+summary(lm(re78 ~ train + educ + age + black + hisp, data = jtrain3 %>% filter(unem75 == 1 & unem74 == 1)))
+
+# Estatísticas descritivas por grupos
+jtrain3 %>% group_by(train) %>%
+  summarise(across(c(re78, re75, re74, educ, age, black, hisp, unem75, unem74), list(mean = mean, sd = sd)))
+
+# Tabelas de balanceamento entre grupos de tratamento e controle (dados observacionais)
+# Ajuste o caminho para salvar o arquivo no seu sistema
+vars_to_balance <- jtrain3 %>% 
+  select(train, re78, re75, re74, educ, age, black, hisp, unem75, unem74)
+
+table_observational <- balance_table(vars_to_balance, "train") %>%
+  mutate(Media_control1 = round(Media_control1, digits = 4),
+         Media_trat1 = round(Media_trat1, digits = 4),
+         diff_t_C = Media_trat1 - Media_control1) %>%
+  relocate(c("variables1", "Media_trat1", "Media_control1", "diff_t_C", "p_value1"))
+
+print(table_observational) # Exibindo a tabela
+
+write_xlsx(table_observational, "/Users/rtigre/Desktop/Aulas IC/Aula 2 - experimentos/balance-observacional.xlsx") # Salvando a tabela em um arquivo Excel
+
+
+##########
+# Com dados experimentais
+##########
+
+data("jtrain2") # ver dicionário dos dados aqui https://cran.r-project.org/web/packages/wooldridge/wooldridge.pdf
+
+# Regressões
+summary(lm(re78 ~ train, data = jtrain2))
+table(jtrain2$train, jtrain2$unem75)
+
+summary(lm(re78 ~ train + re75 + educ + age, data = jtrain2))
+summary(lm(re78 ~ train + re75 + re74 + educ + age + black + hisp, data = jtrain2))
+summary(lm(re78 ~ train + educ + age + black + hisp, data = jtrain2 %>% filter(unem75 == 1 & unem74 == 1)))
+
+# Sumário por grupos
+jtrain2 %>% group_by(train) %>%
+  summarise(across(c(re78, re75, re74, educ, age, black, hisp, unem75, unem74), list(mean = mean, sd = sd)))
+
+# Tabelas de balanceamento entre grupos de tratamento e controle (dados experimentais)
+# Ajuste o caminho para salvar o arquivo no seu sistema
+vars_to_balance2 <- jtrain2 %>% 
+  select(train, re78, re75, re74, educ, age, black, hisp, unem75, unem74)
+  
+table_experimental <- balance_table(vars_to_balance2, "train") %>%
+  mutate(Media_control1 = round(Media_control1, digits = 4),
+         Media_trat1 = round(Media_trat1, digits = 4),
+         diff_t_C = Media_trat1 - Media_control1) %>%
+  relocate(c("variables1", "Media_trat1", "Media_control1", "diff_t_C", "p_value1"))
+  
+print(table_experimental) # Exibindo a tabela
+  
+write_xlsx(table_experimental, "/Users/rtigre/Desktop/Aulas IC/Aula 2 - experimentos/balance-experimental.xlsx") # Salvando a tabela em um arquivo Excel
