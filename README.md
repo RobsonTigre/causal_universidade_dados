@@ -1,6 +1,6 @@
 # causal_universidade_dados
 
-Este repositório reúne os slides e scripts do curso de Introdução à Inferência Causal, desenvolvido por mim para a [Universidade dos Dados](https://www.universidadedosdados.com/). Ao disponibilizar esse material, em um acordo com [André Yukio](https://github.com/yukioandre), minha intenção é demonstrar a qualidade do curso e, ao mesmo tempo, inspirar novos alunos a se inscreverem.
+Este repositório reúne os slides e scripts do curso de Introdução à Inferência Causal, desenvolvido por mim para a Universidade dos Dados. Ao disponibilizar esse material, em um acordo com André Yukio, minha intenção é demonstrar a qualidade do curso e, ao mesmo tempo, inspirar novos alunos a se inscreverem.
 
 ## Organização do material
 O conteúdo está dividido em pastas, cada uma contendo scripts em R correspondentes às seções do curso:
