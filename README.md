@@ -6,12 +6,19 @@ Este repositório reúne os slides e scripts do curso de Introdução à Inferê
 O conteúdo está dividido em pastas, cada uma contendo scripts em R correspondentes às seções do curso:
 
 1.1 - Introdução e revisão de conceitos de econometria
+
 1.2 e 1.3 - outcome potencial e viés de Variável omitida
+
 2.1, 2.2, 2.3 - Experimentos, exercicio e hipoteses
+
 2.4 e 2.5 - Poder estatístico e passo a passo
+
 3.1 e 3.2 - Variável instrumental e exercício
+
 4.1 e 4.2 Regressão descontínua e exercício
+
 5.1 e 5.2 Diferença em diferenças (DiD ou diff-in-diff) e suas suposições
+
 5.3 e 5.4 Formalização do método e exercício
 
 ## Cursos personalizados e ao vivo
