@@ -23,4 +23,5 @@ O conteúdo está dividido em pastas, cada uma contendo scripts em R corresponde
 
 ## Cursos personalizados e ao vivo
 Quer levar o aprendizado para o próximo nível? Se você deseja um curso ao vivo e personalizado para a sua empresa ou instituição, entre em contato comigo! Posso desenhar um curso sob medida para atender às suas necessidades específicas.
+
 **Contato:** [robson.tigre0@gmail.com](mailto:robson.tigre0@gmail.com)
